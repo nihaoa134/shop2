@@ -252,12 +252,16 @@ class AccountController extends CommonController
             'openid' => $openid
         ];
         $wx_user_info = Users::where($where)->first();
-
-
+        $info = json_encode($wx_user_info,ture);
+        print_r($info);die;
         if (empty($wx_user_info)) {
+
             return view('account.register');
 
         }else{
+            $redis = new \redis;
+            $redis->connect("127.0.0.1",6379);//exit;
+            $like="openid";
 
             $this->success('登录成功');
             return view('account.userpage');
