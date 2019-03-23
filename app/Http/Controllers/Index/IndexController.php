@@ -46,7 +46,7 @@ class IndexController extends Controller
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$urlstart&response_type=code&scope=$scope&state=STATE#wechat_redirect";
         echo "<a href=".$url.">微信登陆</a>";
     }
-    public function  wxlogincode(Request $request){
+    /*public function  wxlogincode(Request $request){
 //        print_r($_GET);die;
         $appid = "wx0ed775ffa80afa46";
         $appsecret= "6a5574a26d9bc3db5a3df198f16d855d";
@@ -85,6 +85,6 @@ class IndexController extends Controller
             }
             exit;
         }
-    }
+    }*/
 
 }

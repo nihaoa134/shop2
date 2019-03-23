@@ -87,7 +87,7 @@ Route::any('demoList',"Demo\DemoController@demoList");
 Route::any('wechatIndex','Wechat\WechatController@wechatIndex');
 
 
-Route::any('wxlogin','Index\IndexController@wxlogin');//微信登陆
-Route::any('wxlogincode','Index\IndexController@wxlogincode');//网页授权
+Route::any('wxlogin','Account\AccountController@wxlogin');//微信登陆
+Route::any('wxlogincode','Account\AccountController@wxlogincode');//网页授权
 
 

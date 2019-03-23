@@ -184,5 +184,37 @@ class AccountController extends CommonController
         return view('account.userpage');
 
     }
+    //微信登陆
+    public function wxlogin(){
+        $urlstart = urlencode("http://ppp.lixiaonitongxue.top/wxlogincode");
+        $appid = "wx0ed775ffa80afa46";
+        $scope = "snsapi_userinfo";
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$urlstart&response_type=code&scope=$scope&state=STATE#wechat_redirect";
+        echo "<a href=".$url.">微信登陆</a>";
+    }
+    public function  wxlogincode(Request $request){
+        //print_r($_GET);
+        $appid = "wx0ed775ffa80afa46";
+        $appsecret= "6a5574a26d9bc3db5a3df198f16d855d";
+        $code = $request->input('code');
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
+        $token_json = file_get_contents($url);
+        $token_arr = json_decode($token_json,true);
+        //print_r($token_arr);
+        //查询数据库中是否存在该账号
+        $unionid = $token_arr['openid'];
+        $where = [
+            'openid'   =>  $unionid
+        ];
+        $wx_user_info = Users::where($where)->first();
+        if($wx_user_info){
+            $user_info = Users::where(['wechat_id'=>$wx_user_info->id])->first();
+        }
 
+        if(empty($wx_user_info)){
+            return view( 'account.register');
+
+        }
+
+    }
 }
