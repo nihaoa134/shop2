@@ -253,7 +253,12 @@ class AccountController extends CommonController
         ];
         $wx_user_info = Users::where($where)->first();
         $info = json_encode($wx_user_info,true);
-        print_r($info);die;
+//        print_r($info);die;
+        $name = $info['tel'];
+        $openid = $info['openid'];
+        $time = time();
+        print_r($name);
+        print_r($openid);die;
         if (empty($wx_user_info)) {
 
             return view('account.register');
