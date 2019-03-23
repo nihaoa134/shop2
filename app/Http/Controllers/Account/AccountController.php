@@ -216,7 +216,7 @@ class AccountController extends CommonController
         ];
         $bol = Users:: where($where)->update(['openid' => $unionid]);
         var_dump($bol);
-        $where = [
+/*        $where = [
             'openid' => $unionid
         ];
         $wx_user_info = Users::where($where)->first();
@@ -227,7 +227,28 @@ class AccountController extends CommonController
         if (empty($wx_user_info)) {
             return view('account.register');
 
-        }
+        }*/
+
+    }
+    public function weixinToken(Request $request){
+        $appid = "wxdfad369a304a60e7";
+        $secret = "c6e634bf43147ea9479245eef5edccca";
+        $arr = $request -> input();
+        $code = $arr['code'];
+        //用code换token
+        $accessToken = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$secret&code=$code&grant_type=authorization_code";
+        $info = file_get_contents($accessToken);
+        $arr = json_decode($info,true);
+        $opendid = $arr['openid'];
+        $user_info = $request -> session() -> get('user_info');//user_id
+        $where = [
+            'user_id' => $user_info['user_id'],
+        ];
+        var_dump($where);die;
+        $bol = Users :: where($where) -> update(['openid'=>$opendid]);
+        var_dump($bol);
+//
+//        $this -> cache($arr);
 
     }
 }
