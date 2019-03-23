@@ -39,7 +39,7 @@ class IndexController extends Controller
     }
     //微信登陆
     public function wxlogin(){
-        $urlstart = urlencode("http://node.lixiaonitongxue.top/wxlogincode");
+        $urlstart = urlencode("http://ppp.lixiaonitongxue.top/wxlogincode");
         $appid = "wx0ed775ffa80afa46";
         $scope = "snsapi_userinfo";
         $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$urlstart&response_type=code&scope=$scope&state=STATE#wechat_redirect";
