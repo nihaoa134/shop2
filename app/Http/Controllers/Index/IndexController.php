@@ -54,7 +54,7 @@ class IndexController extends Controller
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
         $token_json = file_get_contents($url);
         $token_arr = json_decode($token_json,true);
-        print_r($token_arr);die;
+//        print_r($token_arr);die;
 //        $openid = $token_arr['openid'];
 //        print_r($openid);
         //查询数据库中是否存在该账号
@@ -63,7 +63,7 @@ class IndexController extends Controller
             'union_id'   =>  $unionid
         ];
         $wx_user_info = Users::where($where)->first();
-//        print_r($wx_user_info);die;
+        print_r($wx_user_info);die;
         if($wx_user_info){
             $user_info = Users::where(['wechat_id'=>$wx_user_info->id])->first();
         }
