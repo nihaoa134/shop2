@@ -60,7 +60,7 @@ class IndexController extends Controller
         //查询数据库中是否存在该账号
         $unionid = $token_arr['unionid'];
         $where = [
-            'union_id'   =>  $unionid
+            'openid'   =>  $unionid
         ];
         $wx_user_info = Users::where($where)->first();
         print_r($wx_user_info);die;
