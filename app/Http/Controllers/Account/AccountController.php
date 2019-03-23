@@ -252,7 +252,7 @@ class AccountController extends CommonController
             'openid' => $openid
         ];
         $wx_user_info = Users::where($where)->first();
-        $info = json_encode($wx_user_info,true);
+        $info = json_decode($wx_user_info,true);
         print_r($info);die;
         $name = $info['tel'];
         $openid = $info['openid'];
