@@ -247,14 +247,12 @@ class AccountController extends CommonController
         $token_arr = json_decode($token_json, true);
         //print_r($token_arr);
         //查询数据库中是否存在该账号
-        $unionid = $token_arr['openid'];
+        $openid = $token_arr['openid'];
                 $where = [
-            'openid' => $unionid
+            'openid' => $openid
         ];
         $wx_user_info = Users::where($where)->first();
-        if ($wx_user_info) {
-            $user_info = Users::where(['wechat_id' => $wx_user_info->id])->first();
-        }
+
 
         if (empty($wx_user_info)) {
             return view('account.register');
