@@ -244,7 +244,7 @@ class AccountController extends CommonController
         $where = [
             'user_id' => $user_info['user_id'],
         ];
-        var_dump($where);die;
+        //var_dump($where);die;
         $bol = Users :: where($where) -> update(['openid'=>$opendid]);
         var_dump($bol);
 //
