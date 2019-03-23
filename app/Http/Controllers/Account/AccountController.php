@@ -253,12 +253,21 @@ class AccountController extends CommonController
         ];
         $wx_user_info = Users::where($where)->first();
         $info = json_decode($wx_user_info,true);
-        print_r($info);die;
+        //print_r($info);die;
         $name = $info['tel'];
         $openid = $info['openid'];
         $time = time();
-        print_r($name);
-        print_r($openid);die;
+        $obj = new \redis;
+        $obj->connect("127.0.0.1",6379);
+        $id = $obj->incr('id');
+        $hest = "id_{$id}";
+        $like = "wxlogin";
+        $obj->hset($hest,"id",$id);
+        $obj->hset($hest,"name",$name);
+        $obj->hset($hest,"openid",$openid);
+        $obj->hset($hest,"time",$time);
+        $obj->rPush($like,$hest);
+
         if (empty($wx_user_info)) {
 
             return view('account.register');
