@@ -7,6 +7,7 @@ use App\Model\Goods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Model\Users;
 
 class IndexController extends Controller
 {
@@ -53,9 +54,45 @@ class IndexController extends Controller
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
         $token_json = file_get_contents($url);
         $token_arr = json_decode($token_json,true);
-//        print_r($token_arr);die;
-        $openid = $token_arr['openid'];
-        print_r($openid);
+        print_r($token_arr);die;
+//        $openid = $token_arr['openid'];
+//        print_r($openid);
+        //查询数据库中是否存在该账号
+        $unionid = $token_arr['unionid'];
+        $where = [
+            'union_id'   =>  $unionid
+        ];
+        $wx_user_info = Users::where($where)->first();
+        if($wx_user_info){
+            $user_info = Users::where(['wechat_id'=>$wx_user_info->id])->first();
+        }
+
+        if(empty($wx_user_info)){
+            //第一次登录
+            $data = [
+                'openid'        =>  $token_arr['openid'],
+                'nickname'      =>  $token_arr['nickname'],
+                'sex'           =>  $token_arr['sex'],
+                'headimgurl'    =>  $token_arr['headimgurl'],
+                'union_id'      =>  $token_arr,
+                'add_time'      =>  time()
+            ];
+            $wechat_id = Users::insertGetId($data);
+            $rs = Users::insertGetId(['wechat_id'=>$wechat_id]);
+            if($rs){
+
+                $token=substr(md5(time().mt_rand(1,99999)),10,10);
+                setcookie('uid',$rs,time()+86400,'/','shop.com',false,true);
+                setcookie('token',$token,time()+86400,'/user','',false,true);
+                $request->session()->put('u_token',$token);
+                $request->session()->put('uid',$rs);
+                echo '注册成功';
+                header("refresh:2,url='/user/center'");
+            }else{
+                echo '注册失败';
+            }
+            exit;
+        }
     }
 
 }
