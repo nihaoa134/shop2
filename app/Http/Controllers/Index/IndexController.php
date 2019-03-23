@@ -63,7 +63,7 @@ class IndexController extends Controller
             'union_id'   =>  $unionid
         ];
         $wx_user_info = Users::where($where)->first();
-        print_r($wx_user_info);die;
+//        print_r($wx_user_info);die;
         if($wx_user_info){
             $user_info = Users::where(['wechat_id'=>$wx_user_info->id])->first();
         }
