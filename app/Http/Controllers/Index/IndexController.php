@@ -63,30 +63,22 @@ class IndexController extends Controller
             'union_id'   =>  $unionid
         ];
         $wx_user_info = Users::where($where)->first();
+        print_r($wx_user_info);die;
         if($wx_user_info){
             $user_info = Users::where(['wechat_id'=>$wx_user_info->id])->first();
         }
 
         if(empty($wx_user_info)){
-            //第一次登录
+            //绑定微信
             $data = [
                 'openid'        =>  $token_arr['openid'],
-                'nickname'      =>  $token_arr['nickname'],
-                'sex'           =>  $token_arr['sex'],
-                'headimgurl'    =>  $token_arr['headimgurl'],
-                'union_id'      =>  $token_arr,
-                'add_time'      =>  time()
+
             ];
             $wechat_id = Users::insertGetId($data);
             $rs = Users::insertGetId(['wechat_id'=>$wechat_id]);
             if($rs){
 
-                $token=substr(md5(time().mt_rand(1,99999)),10,10);
-                setcookie('uid',$rs,time()+86400,'/','shop.com',false,true);
-                setcookie('token',$token,time()+86400,'/user','',false,true);
-                $request->session()->put('u_token',$token);
-                $request->session()->put('uid',$rs);
-                echo '注册成功';
+                echo '绑定成功';
                 header("refresh:2,url='/user/center'");
             }else{
                 echo '注册失败';
