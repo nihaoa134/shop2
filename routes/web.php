@@ -87,7 +87,9 @@ Route::any('demoList',"Demo\DemoController@demoList");
 Route::any('wechatIndex','Wechat\WechatController@wechatIndex');
 
 
-Route::any('wxlogin','Account\AccountController@wxlogin');//微信登陆
-Route::any('wxlogincode','Account\AccountController@wxlogincode');//网页授权
+Route::any('wxlogin','Account\AccountController@wxlogin');//获取code
+Route::any('wxlogincode','Account\AccountController@wxlogincode');//绑定微信
 
+Route::any('wxlogin1','Account\AccountController@wxlogin1');//获取code
+Route::any('weixinlogin','Account\AccountController@weixinlogin');//微信登陆
 

@@ -44,7 +44,7 @@
             <a href="https://m.1yyg.com/v44/passport/FindPassword.do">忘记密码？</a>
             <b></b>
             <a href="https://m.1yyg.com/v44/passport/register.do?forward=https%3a%2f%2fm.1yyg.com%2fv44%2fmember%2f">新用户注册</a>
-            <a href="wxlogin">微信登陆</a>
+            <a href="wxlogin1">微信登陆</a>
         </div>
     </div>
     <div class="oter_operation gray9" style="display: none;">

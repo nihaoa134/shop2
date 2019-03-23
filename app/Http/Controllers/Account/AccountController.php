@@ -161,7 +161,6 @@ class AccountController extends CommonController
                     'pwd' => $pwd
                 ];
 
-                $request->session()->put('user_info', $user_info);
 
                 return $this->success('登录成功');
 
@@ -188,7 +187,7 @@ class AccountController extends CommonController
 
     }
 
-    //微信登陆
+    //获取code
     public function wxlogin()
     {
         $urlstart = urlencode("http://ppp.lixiaonitongxue.top/wxlogincode");
@@ -230,25 +229,40 @@ class AccountController extends CommonController
         }*/
 
     }
-    public function weixinToken(Request $request){
-        $appid = "wxdfad369a304a60e7";
-        $secret = "c6e634bf43147ea9479245eef5edccca";
-        $arr = $request -> input();
-        $code = $arr['code'];
-        //用code换token
-        $accessToken = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$secret&code=$code&grant_type=authorization_code";
-        $info = file_get_contents($accessToken);
-        $arr = json_decode($info,true);
-        $opendid = $arr['openid'];
-        $user_info = $request -> session() -> get('user_info');//user_id
-        $where = [
-            'user_id' => $user_info['user_id'],
+    //获取code
+    public function wxlogin1()
+    {
+        $urlstart = urlencode("http://ppp.lixiaonitongxue.top/weixinlogin");
+        $appid = "wx0ed775ffa80afa46";
+        $scope = "snsapi_userinfo";
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$urlstart&response_type=code&scope=$scope&state=STATE#wechat_redirect";
+        echo "<a href=" . $url . ">微信登陆</a>";
+    }
+    public function weixinlogin(Request $request){
+        $appid = "wx0ed775ffa80afa46";
+        $appsecret = "6a5574a26d9bc3db5a3df198f16d855d";
+        $code = $request->input('code');
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
+        $token_json = file_get_contents($url);
+        $token_arr = json_decode($token_json, true);
+        //print_r($token_arr);
+        //查询数据库中是否存在该账号
+        $unionid = $token_arr['openid'];
+                $where = [
+            'openid' => $unionid
         ];
-        //var_dump($where);die;
-        $bol = Users :: where($where) -> update(['openid'=>$opendid]);
-        var_dump($bol);
-//
-//        $this -> cache($arr);
+        $wx_user_info = Users::where($where)->first();
+        if ($wx_user_info) {
+            $user_info = Users::where(['wechat_id' => $wx_user_info->id])->first();
+        }
 
+        if (empty($wx_user_info)) {
+            return view('account.register');
+
+        }else{
+
+            $this->success('登录成功');
+            return view('account.userpage');
+        }
     }
 }
