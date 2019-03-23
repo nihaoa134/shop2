@@ -46,14 +46,14 @@ class IndexController extends Controller
         echo "<a href=".$url.">微信登陆</a>";
     }
     public function  wxlogincode(Request $request){
-        //print_r($_GET);
+        print_r($_GET);die;
         $appid = "wx0ed775ffa80afa46";
         $appsecret= "6a5574a26d9bc3db5a3df198f16d855d";
         $code = $request->input('code');
         $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
         $token_json = file_get_contents($url);
         $token_arr = json_decode($token_json,true);
-        //print_r($token_arr);
+        //print_r($token_arr);die;
         $openid = $token_arr['openid'];
         print_r($openid);
     }
