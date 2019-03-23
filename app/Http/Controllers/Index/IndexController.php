@@ -55,12 +55,7 @@ class IndexController extends Controller
         $token_arr = json_decode($token_json,true);
         //print_r($token_arr);
         $openid = $token_arr['openid'];
-        $redis = new \redis;
-        $redis->connect("127.0.0.1",6379);//exit;
-        $like="openid";
-        $redis->rpush($like,$openid);
-        $data = $redis->lrange($like,0,-1);
-        //print_r($data);
+        print_r($openid);
     }
 
 }
