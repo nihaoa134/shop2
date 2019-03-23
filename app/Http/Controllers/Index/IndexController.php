@@ -58,7 +58,7 @@ class IndexController extends Controller
 //        $openid = $token_arr['openid'];
 //        print_r($openid);
         //查询数据库中是否存在该账号
-        $unionid = $token_arr['unionid'];
+        $unionid = $token_arr['openid'];
         $where = [
             'openid'   =>  $unionid
         ];
