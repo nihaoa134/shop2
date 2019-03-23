@@ -61,6 +61,7 @@
     <a href=""><s class="m_s5"></s>收货地址<i></i></a>
     <a href="" class="mt10"><s class="m_s6"></s>帮助与反馈<i></i></a>
     <a href=""><s class="m_s7"></s>二维码分享<i></i></a>
+	<a href="/wxlogin"><s class="m_s7"></s>绑定微信<i></i></a>
     <p class="colorbbb">客服热线：400-666-2110  (工作时间9:00-17:00)</p>
 </div>
 <div class="footer clearfix">
