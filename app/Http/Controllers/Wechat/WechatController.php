@@ -27,7 +27,7 @@ class WechatController extends Controller
 
         $CreateTime = $objxml->CreateTime;*/
 
-        $openid = $objxml->ToUserName;
+        $openid = $objxml->FromUserName;
 
         $type = $objxml->EventKey;
 
