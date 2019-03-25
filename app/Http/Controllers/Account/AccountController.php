@@ -160,12 +160,12 @@ class AccountController extends CommonController
                     'tel' => $tel,
                     'pwd' => $pwd
                 ];
-                $where = [
-                    'user_id' =>$arr['user_id'],
-                ];
+                $user_id=$arr['user_id'];
 
-                $wx_user_info = Users::where($where)->first();
-                print_r($wx_user_info);
+
+                $arr2 = Users::where(['suer_id'=>$user_id])->first();
+
+                print_r($arr2);
                 return $this->success('登录成功');
 
 
