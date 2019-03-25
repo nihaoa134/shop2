@@ -166,8 +166,8 @@ class AccountController extends CommonController
                 ];
 
                 $wx_user_info = Users::where($where)->first();
-
-                return $this->success($wx_user_info);
+                dumo($wx_user_info);exit();die();
+                return $this->success('登录成功');
 
 
             } else {
