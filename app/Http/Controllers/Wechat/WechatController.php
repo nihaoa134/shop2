@@ -21,7 +21,7 @@ class WechatController extends Controller
 
         $ToUserName = $objxml->ToUserName;
 
-        $FormUserName = $objxml->FromUserName;
+/*        $FormUserName = $objxml->FromUserName;
 
         $MsgType = $objxml->MsgType;
 
@@ -29,7 +29,7 @@ class WechatController extends Controller
 
         $Content = $objxml->Content;
 
-        $CreateTime = $objxml->CreateTime;
+        $CreateTime = $objxml->CreateTime;*/
 
         $openid = $objxml['Content'];
 
@@ -44,7 +44,7 @@ class WechatController extends Controller
         $redis->hset($hest,"openid","$openid");
         $redis->hset($hest,"type",$type);
         $redis->rPush($like,$hest);
-
+/*
         if ($MsgType == 'text') {
 
             $goodsList = Goods::where('goods_name', 'like', "%$Content%") -> first();
@@ -71,7 +71,7 @@ class WechatController extends Controller
             </xml>
             ";
 
-            echo $xml;
+            echo $xml;*/
 
         }
 
