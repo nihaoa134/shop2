@@ -9,7 +9,8 @@ class WechatController extends Controller
 {
     public function wechatIndex()
     {
-        $str = file_get_contents("php://input");
+        echo $_GET['echostr'];
+        //$str = file_get_contents("php://input");
 //        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
       /*  $objxml = simplexml_load_string($str);
 
