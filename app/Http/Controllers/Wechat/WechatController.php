@@ -9,10 +9,9 @@ class WechatController extends Controller
 {
     public function wechatIndex()
     {
-        echo $_GET['echostr'];
-        //$str = file_get_contents("php://input");
-//        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
-      /*  $objxml = simplexml_load_string($str);
+        $str = file_get_contents("php://input");
+
+        $objxml = simplexml_load_string($str);
 
         print_r($objxml);
 
@@ -44,9 +43,9 @@ class WechatController extends Controller
         $redis->hset($hest,"id","$id");
         $redis->hset($hest,"openid","$openid");
         $redis->hset($hest,"type",$type);
-        $redis->rPush($like,$hest);*/
-/*
-        if ($MsgType == 'text') {
+        $redis->rPush($like,$hest);
+
+        /*if ($MsgType == 'text') {
 
             $goodsList = Goods::where('goods_name', 'like', "%$Content%") -> first();
 
@@ -73,9 +72,8 @@ class WechatController extends Controller
             ";
 
             echo $xml;
-        }
-*/
 
+        }*/
 
     }
 
