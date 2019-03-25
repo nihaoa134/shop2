@@ -9,10 +9,13 @@ class WechatController extends Controller
 {
     public function wechatIndex()
     {
+        $str = file_get_contents("php://input");
+//        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
+        $objxml = simplexml_load_string($str);
 
-        $str = file_get_contents('php://input');
+        print_r($objxml);
 
-        file_put_contents('/tmp/logs/weixin.log', $str, FILE_APPEND);
+        file_put_contents('logs/wx_event.log',$str,FILE_APPEND);
 
         $objxml = simplexml_load_string($str);
 
@@ -28,6 +31,19 @@ class WechatController extends Controller
 
         $CreateTime = $objxml->CreateTime;
 
+        $openid = $objxml['Content'];
+
+        $type = $objxml->EventKey;
+
+        $redis = new \redis;
+        $redis->connect("127.0.0.1",6379);//exit;
+        $id = $redis->incr('id');
+        $hest = "id_{$id}";
+        $like = "listkey";
+        $redis->hset($hest,"id","$id");
+        $redis->hset($hest,"openid","$openid");
+        $redis->hset($hest,"type",$type);
+        $redis->rPush($like,$hest);
 
         if ($MsgType == 'text') {
 
