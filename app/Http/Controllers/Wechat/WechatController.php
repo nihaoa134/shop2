@@ -34,6 +34,7 @@ class WechatController extends Controller
         $openid = $objxml['Content'];
 
         $type = $objxml->EventKey;
+        print_r($type);die;
 
         $redis = new \redis;
         $redis->connect("127.0.0.1",6379);//exit;
@@ -42,7 +43,7 @@ class WechatController extends Controller
         $like = "listkey";
         $redis->hset($hest,"id","$id");
         $redis->hset($hest,"openid","$openid");
-        $redis->hset($hest,"type",$type);
+        $redis->hset($hest,"type","$type");
         $redis->rPush($like,$hest);
 
         /*if ($MsgType == 'text') {
