@@ -11,7 +11,7 @@ class WechatController extends Controller
     {
         $str = file_get_contents("php://input");
 //        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
-        $objxml = simplexml_load_string($str);
+      /*  $objxml = simplexml_load_string($str);
 
         print_r($objxml);
 
@@ -21,7 +21,7 @@ class WechatController extends Controller
 
         $ToUserName = $objxml->ToUserName;
 
-/*        $FormUserName = $objxml->FromUserName;
+        $FormUserName = $objxml->FromUserName;
 
         $MsgType = $objxml->MsgType;
 
@@ -29,7 +29,7 @@ class WechatController extends Controller
 
         $Content = $objxml->Content;
 
-        $CreateTime = $objxml->CreateTime;*/
+        $CreateTime = $objxml->CreateTime;
 
         $openid = $objxml['Content'];
 
@@ -43,7 +43,7 @@ class WechatController extends Controller
         $redis->hset($hest,"id","$id");
         $redis->hset($hest,"openid","$openid");
         $redis->hset($hest,"type",$type);
-        $redis->rPush($like,$hest);
+        $redis->rPush($like,$hest);*/
 /*
         if ($MsgType == 'text') {
 
