@@ -162,7 +162,6 @@ class AccountController extends CommonController
                 ];
                 $where = [
                     'user_id' =>$arr['user_id'],
-                    'openid' => '',
                 ];
 
                 $wx_user_info = Users::where($where)->first();
