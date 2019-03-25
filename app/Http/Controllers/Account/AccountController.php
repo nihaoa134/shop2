@@ -163,7 +163,7 @@ class AccountController extends CommonController
                 $user_id=$arr['user_id'];
 
 
-                $arr2 = Users::where(['suer_id'=>$user_id])->first();
+                $arr2 = Users::where(['user_id'=>$user_id])->first();
 
                 print_r($arr2);
                 return $this->success('登录成功');
