@@ -160,9 +160,16 @@ class AccountController extends CommonController
                     'tel' => $tel,
                     'pwd' => $pwd
                 ];
+                $where = [
+                    'user_id' =>$arr['user_id'],
+                    'openid' => '',
+                ];
 
+                $wx_user_info = Users::where($where)->first();
+                print_r($wx_user_info);
 
                 return $this->success('登录成功');
+
 
             } else {
 
@@ -257,28 +264,41 @@ class AccountController extends CommonController
         $name = $info['tel'];
         $openid = $info['openid'];
         $time = time();
-        $obj = new \redis;
-        $obj->connect("127.0.0.1",6379);
-        $id = $obj->incr('id');
-        $hest = "id_{$id}";
-        $like = "wxlogin";
-        $obj->hset($hest,"id",$id);
-        $obj->hset($hest,"name",$name);
-        $obj->hset($hest,"openid",$openid);
-        $obj->hset($hest,"time",$time);
-        $obj->rPush($like,$hest);
 
         if (empty($wx_user_info)) {
 
             return view('account.register');
 
         }else{
-            $redis = new \redis;
-            $redis->connect("127.0.0.1",6379);//exit;
-            $like="openid";
+            $obj = new \redis;
+            $obj->connect("127.0.0.1",6379);//exit;
+            $id = $obj->incr('id');
+            $hest = "id_{$id}";
+            $like = "wxlogin";
+            $obj->hset($hest,"id",$id);
+            $obj->hset($hest,"name",$name);
+            $obj->hset($hest,"openid",$openid);
+            $obj->hset($hest,"time",$time);
+            $obj->rPush($like,$hest);
+
 
             $this->success('登录成功');
             return view('account.userpage');
         }
+    }
+    public function welcome(){
+        $str = file_get_contents("php://input");
+        $objxml = simplexml_load_string($str);
+        $ToUserName = $objxml->ToUserName;
+        $CreateTime = $objxml->CreateTime;
+
+        $FormUserName = $objxml->FromUserName;
+        $xml = "<xml>
+                        <ToUserName><![CDATA[$FormUserName]]></ToUserName>
+                        <FromUserName><![CDATA[$ToUserName]]></FromUserName>
+                        <CreateTime>$CreateTime</CreateTime>
+                        <MsgType><![CDATA[text]]></MsgType>
+                        <Content><![CDATA[欢迎登陆]]></Content>
+                    </xml>";
     }
 }
