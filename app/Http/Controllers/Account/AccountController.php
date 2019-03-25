@@ -162,10 +162,12 @@ class AccountController extends CommonController
                 ];
                 $user_id=$arr['user_id'];
 
-
                 $arr2 = Users::where(['user_id'=>$user_id])->first();
+                if($arr2['openid']!==''){
+                    $xml=$this->welcome();
 
-                print_r($arr2);
+                    return $xml;
+                }
                 return $this->success('登录成功');
 
 
@@ -298,5 +300,6 @@ class AccountController extends CommonController
                         <MsgType><![CDATA[text]]></MsgType>
                         <Content><![CDATA[欢迎登陆]]></Content>
                     </xml>";
+        return $xml;
     }
 }
