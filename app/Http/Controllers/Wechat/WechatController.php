@@ -13,13 +13,9 @@ class WechatController extends Controller
 
         $objxml = simplexml_load_string($str);
 
-        print_r($objxml);
+        file_put_contents('logs/wx.log',$str,FILE_APPEND);
 
-        file_put_contents('logs/wx_event.log',$str,FILE_APPEND);
-
-        $objxml = simplexml_load_string($str);
-
-        $ToUserName = $objxml->ToUserName;
+/*        $ToUserName = $objxml->ToUserName;
 
         $FormUserName = $objxml->FromUserName;
 
@@ -29,12 +25,11 @@ class WechatController extends Controller
 
         $Content = $objxml->Content;
 
-        $CreateTime = $objxml->CreateTime;
+        $CreateTime = $objxml->CreateTime;*/
 
-        $openid = $objxml['Content'];
+        $openid = $objxml->ToUserName;
 
         $type = $objxml->EventKey;
-        print_r($type);die;
 
         $redis = new \redis;
         $redis->connect("127.0.0.1",6379);//exit;
