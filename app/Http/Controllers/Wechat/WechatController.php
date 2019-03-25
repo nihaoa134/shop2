@@ -71,9 +71,10 @@ class WechatController extends Controller
             </xml>
             ";
 
-            echo $xml;*/
-
+            echo $xml;
         }
+*/
+
 
     }
 
