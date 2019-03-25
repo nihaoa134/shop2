@@ -30,6 +30,13 @@ class WechatController extends Controller
         $openid = $objxml->FromUserName;
 
         $type = $objxml->EventKey;
+        if($type == 1){
+            $type = '这是1';
+        }elseif($type == 2){
+        $type = '这是2';
+        }elseif($type == 3){
+        $type = '这是3';
+        }
 
         $redis = new \redis;
         $redis->connect("127.0.0.1",6379);//exit;
