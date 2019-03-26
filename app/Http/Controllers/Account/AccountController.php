@@ -165,11 +165,7 @@ class AccountController extends CommonController
                 $arr2 = Users::where(['user_id'=>$user_id])->first();
 
                 if($arr['openid']){
-                    $wechat = new \wechat();
-                    $key = "token";
-                    if(Cache::get($key)){
-                        $token = $this -> access_token();
-                    }
+                    $obj = new \url();
                     $key = "accesstoken";
                     $accessToken = cache($key);
                     $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
@@ -186,7 +182,7 @@ class AccountController extends CommonController
                     ];
 
                     $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
-                    $bool = $wechat -> sendPost($url,$json);
+                    $bool = $obj -> sendPost($url,$json);
                     var_dump($bool);
                     return $this->success('登录成功');
                 }
