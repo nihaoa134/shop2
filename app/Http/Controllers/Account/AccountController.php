@@ -165,7 +165,7 @@ class AccountController extends CommonController
                 $arr2 = Users::where(['user_id'=>$user_id])->first();
 
                 if($arr['openid']){
-                    $obj = new \url();
+                    $obj = new \url;
                     $key = "accesstoken";
                     $accessToken = cache($key);
                     $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
@@ -302,41 +302,5 @@ class AccountController extends CommonController
             return view('account.userpage');
         }
     }
-    public function mobando(Request $request){
-        $_select = $request->input('_select');
-        $biaoti = $request->input('biaoti');
-        $mingzi = $request->input('mingzi');
-        $neirong = $request->input('neirong');
-        $asdasd = $request->input('asdasd');
-        $accessTonken = $this->accessTokendo();
-        $objurl = new \curl();
-        $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessTonken";
-        $arr = array(
-            'touser'=>$_select,
-            'template_id'=>$asdasd,
-            'data'=>array(
-                'info'=>array(
-                    'value'=>$biaoti,
-                ),
-                'name'=>array(
-                    'value'=>$mingzi,
-                ),
-                'age'=>array(
-                    'value'=>$neirong,
-                ),
-            ),
-        );
-        $strjson = json_encode($arr,JSON_UNESCAPED_UNICODE);
-        $bol = $objurl->sendPost($url,$strjson);
-        $strjsonss = json_decode($bol,JSON_UNESCAPED_UNICODE);
-        $datado = array(
-            'content'=>$biaoti,
-            'type'=>"模板",
-            'status'=>$strjsonss['errmsg'],
-            'createtime'=>time()
-        );
-        $this->cachedo($datado);
-//        var_dump($bol);
-        return $bol;
-    }
+
 }
