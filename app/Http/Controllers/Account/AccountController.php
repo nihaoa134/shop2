@@ -9,7 +9,24 @@ use Illuminate\Http\Request;
 
 class AccountController extends CommonController
 {
-
+    /*获取accesstoken值*/
+    public function accessToken(){
+        $obj = new \url();
+        $appid = "wx0ed775ffa80afa46";
+        $appsecret = "6a5574a26d9bc3db5a3df198f16d855d";
+        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret";
+        /*echo  $url;
+        exit;*/
+        $access = $obj -> sendGet($url);
+        $arr = json_decode($access,true);
+        $accesstoken = $arr['access_token'];
+        $key = "accesstoken";
+        //cache::flush();
+        $time = $arr['expires_in']/60;
+        cache([$key=>$accesstoken],$time);
+        $accessToken = cache($key);
+        echo $accessToken;
+    }
     //注册
     public function register(Request $request)
     {

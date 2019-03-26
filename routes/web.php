@@ -92,4 +92,5 @@ Route::any('wxlogincode','Account\AccountController@wxlogincode');//绑定微信
 
 Route::any('wxlogin1','Account\AccountController@wxlogin1');//获取code
 Route::any('weixinlogin','Account\AccountController@weixinlogin');//微信登陆
+Route::any('token','Account\AccountController@accessToken');//获取token
 
