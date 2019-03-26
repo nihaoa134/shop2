@@ -163,13 +163,33 @@ class AccountController extends CommonController
                 $user_id=$arr['user_id'];
 
                 $arr2 = Users::where(['user_id'=>$user_id])->first();
-                if($arr2['openid']!==''){
-                    $xml=$this->welcome();
 
-                    return $xml;
+                if($arr['openid']){
+                    $wechat = new \wechat();
+                    $key = "token";
+                    if(Cache::get($key)){
+                        $token = $this -> access_token();
+                    }
+                    $key = "accesstoken";
+                    $accessToken = cache($key);
+                    $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
+
+                    $arr = [
+                        "touser" =>$arr['openid'],
+                        "template_id" =>"5oj_jyQBUeVVjFiWRgQbRslsqBqZomfa5xBtvVIwRP0",
+                        "data"=>[
+                            "first"=>[
+                                "info"=>"欢迎".$user_info['tel']."登陆网站",
+                                "color"=>"#ff0000"
+                            ],
+                        ]
+                    ];
+
+                    $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
+                    $bool = $wechat -> sendPost($url,$json);
+                    var_dump($bool);
+                    return $this->success('登录成功');
                 }
-                return $this->success('登录成功');
-
 
             } else {
 
@@ -286,20 +306,41 @@ class AccountController extends CommonController
             return view('account.userpage');
         }
     }
-    public function welcome(){
-        $str = file_get_contents("php://input");
-        $objxml = simplexml_load_string($str);
-        $ToUserName = $objxml->ToUserName;
-        $CreateTime = $objxml->CreateTime;
-
-        $FormUserName = $objxml->FromUserName;
-        $xml = "<xml>
-                        <ToUserName><![CDATA[$FormUserName]]></ToUserName>
-                        <FromUserName><![CDATA[$ToUserName]]></FromUserName>
-                        <CreateTime>$CreateTime</CreateTime>
-                        <MsgType><![CDATA[text]]></MsgType>
-                        <Content><![CDATA[欢迎登陆]]></Content>
-                    </xml>";
-        return $xml;
+    public function mobando(Request $request){
+        $_select = $request->input('_select');
+        $biaoti = $request->input('biaoti');
+        $mingzi = $request->input('mingzi');
+        $neirong = $request->input('neirong');
+        $asdasd = $request->input('asdasd');
+        $accessTonken = $this->accessTokendo();
+        $objurl = new \curl();
+        $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessTonken";
+        $arr = array(
+            'touser'=>$_select,
+            'template_id'=>$asdasd,
+            'data'=>array(
+                'info'=>array(
+                    'value'=>$biaoti,
+                ),
+                'name'=>array(
+                    'value'=>$mingzi,
+                ),
+                'age'=>array(
+                    'value'=>$neirong,
+                ),
+            ),
+        );
+        $strjson = json_encode($arr,JSON_UNESCAPED_UNICODE);
+        $bol = $objurl->sendPost($url,$strjson);
+        $strjsonss = json_decode($bol,JSON_UNESCAPED_UNICODE);
+        $datado = array(
+            'content'=>$biaoti,
+            'type'=>"模板",
+            'status'=>$strjsonss['errmsg'],
+            'createtime'=>time()
+        );
+        $this->cachedo($datado);
+//        var_dump($bol);
+        return $bol;
     }
 }
