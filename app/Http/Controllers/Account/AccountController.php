@@ -181,7 +181,7 @@ class AccountController extends CommonController
                     ];
 
                     $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
-                    $obj = new \url();
+                    $obj = new \curl();
                     $bool = $obj -> sendPost($url,$json);
                     var_dump($bool);
                     return $this->success('登录成功');
