@@ -165,7 +165,6 @@ class AccountController extends CommonController
                 $arr2 = Users::where(['user_id'=>$user_id])->first();
 
                 if($arr['openid']){
-                    $obj = new \url;
                     $key = "accesstoken";
                     $accessToken = cache($key);
                     $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
@@ -182,6 +181,7 @@ class AccountController extends CommonController
                     ];
 
                     $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
+                    $obj = new \url;
                     $bool = $obj -> sendPost($url,$json);
                     var_dump($bool);
                     return $this->success('登录成功');
