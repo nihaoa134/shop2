@@ -69,25 +69,28 @@ class PayController extends Controller
             $key = "accesstoken";
             $accessToken = cache($key);
             $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
-            if()
-            $arr = array(
-                'touser'=>$openid,
-                'template_id'=>'rDVORwi8pxZWICwGQOXYZ0KSEU4fnWuNrR10PA-fooU',
-                'data'=>array(
-                    'info'=>array(
-                        'value'=>'支付成功',
+            if($res->msg_status==1){
+                $arr = array(
+                    'touser'=>$openid,
+                    'template_id'=>'rDVORwi8pxZWICwGQOXYZ0KSEU4fnWuNrR10PA-fooU',
+                    'data'=>array(
+                        'info'=>array(
+                            'value'=>'支付成功',
+                        ),
+                        'name'=>array(
+                            'value'=>"支付金额".$arr['cash_fee']/100,
+                        ),
+                        'age'=>array(
+                            'value'=>"订单号".$arr['out_trade_no'],
+                        ),
                     ),
-                    'name'=>array(
-                        'value'=>"支付金额".$arr['cash_fee']/100,
-                    ),
-                    'age'=>array(
-                        'value'=>"订单号".$arr['out_trade_no'],
-                    ),
-                ),
-            );
-            $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
-            $obj = new \url();
-            $bool = $obj -> sendPost($url,$json);
+                );
+                $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
+                $obj = new \url();
+                $bool = $obj -> sendPost($url,$json);
+                DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['msg_status'=>2]);
+            }
+
             DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_paytype'=>2]);
             DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_status'=>2]);
         }
