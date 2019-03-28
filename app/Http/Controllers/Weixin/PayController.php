@@ -10,7 +10,7 @@ class PayController extends Controller
 {
     public function wtest(Request $request){
         $order=$request->input('orderList');
-//        print_r($order);die;
+        //print_r($order);
         $str = md5(time());
         $orderid = date('YmdHis',rand(1000000,300000000));
         $orderid = $orderid.rand(10000,30000);
@@ -30,6 +30,7 @@ class PayController extends Controller
             'notify_url' =>$notify_url,
             'trade_type' =>'NATIVE',
         );
+//        print_r($info);die;
         ksort($info);
         $strpay = urldecode(http_build_query($info));
         $strpay.="&key=$key";
@@ -40,7 +41,7 @@ class PayController extends Controller
         $arr2 = $obj->arr2Xml($info);
 //        echo $arr2;
         $bol=$obj->sendPost($url,$arr2);
-//        dump($bol);die;
+        //dump($bol);die;
         $data = simplexml_load_string($bol);
         $code = $data->code_url;
         //echo $code;die;

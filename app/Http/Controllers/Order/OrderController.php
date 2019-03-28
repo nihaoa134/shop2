@@ -32,9 +32,9 @@ class OrderController extends CommonController
 
         }else{
 
-            $str = '01234567890123456789123456789';
+            $str = '012345b67890d123456a789123456789';
 
-            $order_no = substr( str_shuffle( $str ) , rand( 0 , 15 ) , 20 );
+            $order_no = substr( str_shuffle( $str ) , rand( 0 , 15 ) , 9 );
 
             $cart_id = $request -> input('arr');
 
@@ -201,13 +201,14 @@ class OrderController extends CommonController
 
         $orderList = Order::where(['order_id' => $order_id]) -> first();
         $orderList=$orderList->order_no;
+//        print_r($orderList);die;
 
 
 
 
 
         if($type=="wxpay"){
-            return redirect("http://ppp.lixiaonitongxue.top/wtest?orderList=".$orderList);
+            return redirect("http://http://ppp.lixiaonitongxue.top/wtest?orderList=".$orderList);
         }else{
             return view('alipay.show') -> with('orderList' , $orderList);
         }
