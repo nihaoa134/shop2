@@ -32,7 +32,7 @@ class OrderController extends CommonController
 
         }else{
 
-            $str = time();
+            $str = "12345678900021345sdfweraqscz";
 
             $order_no = substr( str_shuffle( $str ) , rand( 0 , 15 ) , 9 );
 
