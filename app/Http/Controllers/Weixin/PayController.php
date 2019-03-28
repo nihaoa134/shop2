@@ -62,7 +62,10 @@ class PayController extends Controller
         file_put_contents("logs/sign.log",$sign,FILE_APPEND);
         file_put_contents("logs/sign.log",$newstr,FILE_APPEND);
         if($sign==$newstr){
-            $openid = session('openid');
+            $res=DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->get()->first();
+            $id=$res->user_id;
+            $userres=DB::table('shop_user')->where('user_id',$id)->get()->first();
+            $openid=$userres->openid;
             $key = "accesstoken";
             $accessToken = cache($key);
             $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
@@ -82,7 +85,6 @@ class PayController extends Controller
                     ),
                 ),
             );
-
             $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
             $obj = new \url();
             $bool = $obj -> sendPost($url,$json);

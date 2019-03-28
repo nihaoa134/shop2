@@ -97,6 +97,8 @@ Route::any('token','Account\AccountController@accessToken');//获取token
 Route::any('wtest','Weixin\PayController@wtest'); //二维码支付
 Route::any('wxstatus','Weixin\PayController@wxstatus'); //微信验签
 
+Route::any('mass','Weixin\PayController@mass'); //微信验签
+
 
 
 
