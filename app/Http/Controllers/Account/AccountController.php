@@ -178,6 +178,8 @@ class AccountController extends CommonController
                     'pwd' => $pwd
                 ];
                 $user_id=$arr['user_id'];
+                $openid = $arr['openid'];
+                $request -> session() -> put('openid',$openid);
                 $request -> session() -> put( 'user_info' , $user_info );
                 /* $arr2 = Users::where(['user_id'=>$user_id])->first();
 

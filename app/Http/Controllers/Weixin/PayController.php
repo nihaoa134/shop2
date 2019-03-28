@@ -62,8 +62,32 @@ class PayController extends Controller
         file_put_contents("logs/sign.log",$sign,FILE_APPEND);
         file_put_contents("logs/sign.log",$newstr,FILE_APPEND);
         if($sign==$newstr){
+            $openid = session('openid');
+            $key = "accesstoken";
+            $accessToken = cache($key);
+            $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
+
+            $arr = array(
+                'touser'=>$openid,
+                'template_id'=>'rDVORwi8pxZWICwGQOXYZ0KSEU4fnWuNrR10PA-fooU',
+                'data'=>array(
+                    'info'=>array(
+                        'value'=>'支付成功',
+                    ),
+                    'name'=>array(
+                        'value'=>"支付金额".$arr['cash_fee']/100,
+                    ),
+                    'age'=>array(
+                        'value'=>"订单号".$arr['out_trade_no'],
+                    ),
+                ),
+            );
+
+            $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
+            $obj = new \url();
+            $bool = $obj -> sendPost($url,$json);
             DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_paytype'=>2]);
-            DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_status'=>2]);
+            DB::tabxxle('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_status'=>2]);
         }
     }
     private function checksign($arr){
