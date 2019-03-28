@@ -10,7 +10,7 @@ class PayController extends Controller
 {
     public function wtest(Request $request){
         $order=$request->input('orderList');
-        //print_r($order);
+        print_r($order);die;
         $str = md5(time());
         $orderid = date('YmdHis',rand(1000000,300000000));
         $orderid = $orderid.rand(10000,30000);
@@ -63,7 +63,7 @@ class PayController extends Controller
         file_put_contents("logs/sign.log",$newstr,FILE_APPEND);
         if($sign==$newstr){
             file_put_contents("/logs/wxstatus.log",$arr['out_trade_no'],FILE_APPEND);
-            DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_paytype'=>2],['order_status'=>2]);
+            DB::table('shop_order')->where('order_no','s83691r02')->update(['order_paytype'=>2],['order_status'=>2]);
         }
     }
     private function checksign($arr){
