@@ -208,7 +208,7 @@ class OrderController extends CommonController
 
 
         if($type=="wxpay"){
-            return redirect("http://http://ppp.lixiaonitongxue.top/wtest?orderList=".$orderList);
+            return redirect("http://ppp.lixiaonitongxue.top/wtest?orderList=".$orderList);
         }else{
             return view('alipay.show') -> with('orderList' , $orderList);
         }
