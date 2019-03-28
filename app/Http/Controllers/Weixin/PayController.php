@@ -10,7 +10,7 @@ class PayController extends Controller
 {
     public function wtest(Request $request){
         $order=$request->input('orderList');
-        print_r($order);die;
+//        print_r($order);die;
         $str = md5(time());
         $orderid = date('YmdHis',rand(1000000,300000000));
         $orderid = $orderid.rand(10000,30000);
