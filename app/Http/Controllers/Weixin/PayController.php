@@ -52,13 +52,13 @@ class PayController extends Controller
     public function wxstatus(Request $request){
         $xml = file_get_contents("php://input");
         $arr = json_decode(json_encode(simplexml_load_string($xml,'SimpleXMLElement',LIBXML_NOCDATA)),true);
-        file_put_contents("logs/wxstatus.log",var_export($arr,true),FILE_APPEND);
+//        file_put_contents("logs/wxstatus.log",var_export($arr,true),FILE_APPEND);
         $sign = $arr['sign'];
-        $sign = "$sign\n";
+//        $sign = "$sign\n";
         unset($arr['sign']);
         $newstr = $this->checksign($arr);
         $newstr = strtoupper($newstr);
-        $newstr="$newstr\n";
+//        $newstr="$newstr\n";
         file_put_contents("logs/sign.log",$sign,FILE_APPEND);
         file_put_contents("logs/sign.log",$newstr,FILE_APPEND);
         if($sign==$newstr){
