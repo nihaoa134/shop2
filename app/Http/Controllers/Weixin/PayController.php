@@ -69,7 +69,7 @@ class PayController extends Controller
             $key = "accesstoken";
             $accessToken = cache($key);
             $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
-
+            if()
             $arr = array(
                 'touser'=>$openid,
                 'template_id'=>'rDVORwi8pxZWICwGQOXYZ0KSEU4fnWuNrR10PA-fooU',
@@ -89,7 +89,7 @@ class PayController extends Controller
             $obj = new \url();
             $bool = $obj -> sendPost($url,$json);
             DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_paytype'=>2]);
-            DB::tabxxle('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_status'=>2]);
+            DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_status'=>2]);
         }
     }
     private function checksign($arr){

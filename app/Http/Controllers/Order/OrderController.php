@@ -60,6 +60,7 @@ class OrderController extends CommonController
                 'order_amount' => $order_amount,
                 'order_paytype' => 1,
                 'order_status' => 1,
+                'msg_status'=>1,
                 'ctime' => time()
             ];
 
