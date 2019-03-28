@@ -94,3 +94,9 @@ Route::any('wxlogin1','Account\AccountController@wxlogin1');//获取code
 Route::any('weixinlogin','Account\AccountController@weixinlogin');//微信登陆
 Route::any('token','Account\AccountController@accessToken');//获取token
 
+Route::any('wtest','Weixin\PayController@wtest'); //二维码支付
+Route::any('wxstatus','Weixin\PayController@wxstatus'); //微信验签
+
+
+
+

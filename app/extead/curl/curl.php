@@ -26,4 +26,17 @@ class url{
         curl_close($ch);
         return $info;
     }
+    function arr2Xml( $arr ){
+        $xml = '<xml version="1.0" encoding="UTF-8"> ';
+        foreach(  $arr as $key => $value ){
+            if (is_numeric($value)){
+                $xml.="<".$key.">".$value."</".$key.">";
+            }else{
+                $xml.="<".$key."><![CDATA[".$value."]]></".$key.">";
+            }
+
+        }
+        $xml .= '</xml>';
+        return $xml;
+    }
 }

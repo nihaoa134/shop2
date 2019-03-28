@@ -178,31 +178,31 @@ class AccountController extends CommonController
                     'pwd' => $pwd
                 ];
                 $user_id=$arr['user_id'];
+                $request -> session() -> put( 'user_info' , $user_info );
+                /* $arr2 = Users::where(['user_id'=>$user_id])->first();
 
-                $arr2 = Users::where(['user_id'=>$user_id])->first();
+              /* if($arr['openid']){
+                     $key = "accesstoken";
+                     $accessToken = cache($key);
+                     $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
 
-                if($arr['openid']){
-                    $key = "accesstoken";
-                    $accessToken = cache($key);
-                    $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
+                     $arr = [
+                         "touser" =>$arr['openid'],
+                         "template_id" =>"5oj_jyQBUeVVjFiWRgQbRslsqBqZomfa5xBtvVIwRP0",
+                         "data"=>[
+                             "first"=>[
+                                 "info"=>"欢迎".$user_info['tel']."登陆网站",
+                                 "color"=>"#ff0000"
+                             ],
+                         ]
+                     ];
 
-                    $arr = [
-                        "touser" =>$arr['openid'],
-                        "template_id" =>"5oj_jyQBUeVVjFiWRgQbRslsqBqZomfa5xBtvVIwRP0",
-                        "data"=>[
-                            "first"=>[
-                                "info"=>"欢迎".$user_info['tel']."登陆网站",
-                                "color"=>"#ff0000"
-                            ],
-                        ]
-                    ];
-
-                    $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
-                    $obj = new \url();
-                    $bool = $obj -> sendPost($url,$json);
-                    return $this->success('登录成功');
-                }
-
+                     $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
+                     $obj = new \url();
+                     $bool = $obj -> sendPost($url,$json);
+                     return $this->success('登录成功');
+                 }*/
+                return $this->success('登录成功');
             } else {
 
                 return $this->fail('登录失败');

@@ -77,8 +77,8 @@
                 <span class="zfb"></span>
                 <b class="z-set"></b>
             </a>
-            <a href="javascript:;" id="jdPay">
-                <span class="kq"></span>
+            <a href="/wtest" id="jdPay">
+                微信支付
                 <b class="z-set"></b>
             </a>
         </div>
