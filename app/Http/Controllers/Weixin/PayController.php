@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 
 class PayController extends Controller
 {
-    public function wtest(){
+    public function wtest(Request $request){
+        $order=$request->input('orderList');
+//        print_r($order);die;
         $str = md5(time());
         $orderid = date('YmdHis',rand(1000000,300000000));
         $orderid = $orderid.rand(10000,30000);
@@ -22,7 +24,7 @@ class PayController extends Controller
             'nonce_str' =>$str,
             'sign_type' =>'MD5',
             'body' =>'席宏刚三条腿',
-            'out_trade_no' =>$orderid,                       //本地订单号
+            'out_trade_no' =>$order,                       //本地订单号
             'total_fee' =>1,                               //用户要支付的总金额
             'spbill_create_ip' =>$ip,
             'notify_url' =>$notify_url,
@@ -58,6 +60,10 @@ class PayController extends Controller
         $newstr="localhost:$newstr\n";
         file_put_contents("logs/sign.log",$sign,FILE_APPEND);
         file_put_contents("logs/sign.log",$newstr,FILE_APPEND);
+        if($sign==$newstr){
+            $orderno = file_put_contents("/logs/wxstatus.log",$arr['out_trade_no'],FILE_APPEND);
+            DB::table('shop_order')->where(['order_no'=>$orderno])->update(['order_paytype'=>2],['order_status'=>2]);
+        }
     }
     private function checksign($arr){
         ksort($arr);
@@ -67,4 +73,5 @@ class PayController extends Controller
         $endstr = md5($strpay);
         return $endstr;
     }
+
 }

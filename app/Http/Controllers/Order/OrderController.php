@@ -193,12 +193,24 @@ class OrderController extends CommonController
 
 
     public function show( Request $request ){
+        $order_id = $request -> input("order_id");
 
-        $order_id = $request -> input();
+        $type = $request->input('type');
 
-        $orderList = Order::where(['order_id' => $order_id]) -> get();
+//        print_r($type);
 
-        return view('alipay.show') -> with('orderList' , $orderList);
+        $orderList = Order::where(['order_id' => $order_id]) -> first();
+        $orderList=$orderList->order_no;
+
+
+
+
+
+        if($type=="wxpay"){
+            return redirect("http://ppp.lixiaonitongxue.top/wtest?orderList=".$orderList);
+        }else{
+            return view('alipay.show') -> with('orderList' , $orderList);
+        }
 
     }
 

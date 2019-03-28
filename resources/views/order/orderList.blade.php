@@ -73,12 +73,12 @@
             </em>
         </a>
         <div class="net-pay">
-            <a href="javascript:;" class="checked" id="jdPay">
+            <a href="javascript:;" class="checked" id="jdPay" vlue="alipay">
                 <span class="zfb"></span>
                 <b class="z-set"></b>
             </a>
-            <a href="/wtest" id="jdPay">
-                微信支付
+            <a href="javascript:;" class="" id="jdPay" value="wxpay">
+                <span class="wx">微信支付</span>
                 <b class="z-set"></b>
             </a>
         </div>
@@ -248,26 +248,32 @@
     </script>
 
     <script type="text/javascript">
-            $(document).on('click','#btnPay',function(){
-                var order_id = $('.g-pay-lst ul li').attr('order_id');
-                var url = '/pay';
-                $.ajax({
-                    'url':url,
-                    'data':{'order_id':order_id},
-                    'type':'post',
-                    'dataType':'json',
-                    success:function(msg){
-                        if( msg.status == 0 ){
-                            alert( msg.msg );
-                            window.location.href ='/writeAddress';
-                        }
-                        if( msg.status == 1 ){
-                            alert( msg.msg );
-                            window.location.href ='/show?order_id='+order_id;
-                        }
-                    }
-                })
+        $(document).on('click','#btnPay',function(){
+            var order_id = $('.g-pay-lst ul li').attr('order_id');
+            $(".net-pay a").each(function () {
+                if($(this).hasClass("checked")){
+                    type = $(this).attr("value");
+                }
             })
+            alert(type);
+            var url = '/pay';
+            $.ajax({
+                'url':url,
+                'data':{'order_id':order_id},
+                'type':'post',
+                'dataType':'json',
+                success:function(msg){
+                    if( msg.status == 0 ){
+                        alert( msg.msg );
+                        window.location.href ='/writeAddress';
+                    }
+                    if( msg.status == 1 ){
+                        alert( msg.msg );
+                        window.location.href ='/show?order_id='+order_id+"&type="+type;
+                    }
+                }
+            })
+        })
     </script>
 </body>
 </html>
