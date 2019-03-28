@@ -62,7 +62,8 @@ class PayController extends Controller
         file_put_contents("logs/sign.log",$sign,FILE_APPEND);
         file_put_contents("logs/sign.log",$newstr,FILE_APPEND);
         if($sign==$newstr){
-            DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_paytype'=>2],['order_status'=>2]);
+            DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_paytype'=>2]);
+            DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['order_status'=>2]);
         }
     }
     private function checksign($arr){
