@@ -70,7 +70,7 @@ class PayController extends Controller
             $accessToken = cache($key);
             $url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=$accessToken";
             if($res->msg_status==1){
-                $arr = array(
+                $arr1 = array(
                     'touser'=>$openid,
                     'template_id'=>'rDVORwi8pxZWICwGQOXYZ0KSEU4fnWuNrR10PA-fooU',
                     'data'=>array(
@@ -85,7 +85,7 @@ class PayController extends Controller
                         ),
                     ),
                 );
-                $json = json_encode($arr,JSON_UNESCAPED_UNICODE);
+                $json = json_encode($arr1,JSON_UNESCAPED_UNICODE);
                 $obj = new \url();
                 $bool = $obj -> sendPost($url,$json);
                 DB::table('shop_order')->where('order_no',$arr['out_trade_no'])->update(['msg_status'=>2]);
